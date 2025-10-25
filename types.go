@@ -21,3 +21,8 @@ type Streamer struct {
 	StreamUrls  []Stream `json:"stream_urls"`
 	IsPrivate   bool     `json:"is_private"`
 }
+
+type StreamerId struct {
+	Platform string `json:"platform"`
+	Username string `json:"username"`
+}
