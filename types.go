@@ -21,8 +21,3 @@ type Streamer struct {
 	StreamUrls  []Stream `json:"stream_urls"`
 	IsPrivate   bool     `json:"is_private"`
 }
-
-// RedisKey returns the Redis key for this streamer
-func (s *Streamer) RedisKey() string {
-	return "streamer:" + s.Platform + ":" + s.Username
-}
