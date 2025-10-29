@@ -1,1 +1,3 @@
-Types of messages sent via websocket between client and server
+# recordthis-types
+
+Types shared between client and server
