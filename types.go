@@ -1,6 +1,6 @@
 package types
 
-// SubscriptionsMessage is sent by client to subscribe to streamers
+// SubscriptionsMessage is sent by client to subscribe to streamers.
 // Example:
 // {
 // 	"type": "subscriptions",
@@ -20,7 +20,7 @@ type SubscriptionsMessage struct {
 	Streamers map[string][]string `json:"streamers"` // Platform -> list of usernames
 }
 
-// ReauthMessage is sent by client to reauthenticate with a new access token
+// ReauthMessage is sent by client to reauthenticate with a new access token.
 // Example:
 // {
 // 	"type": "reauth",
@@ -31,7 +31,7 @@ type ReauthMessage struct {
 	AccessToken string `json:"access_token"` // New access token
 }
 
-// ReauthResponseMessage is sent by server after reauth attempt
+// ReauthResponseMessage is sent by server after reauth attempt.
 // Example:
 // {
 // 	"type": "reauth_response",
@@ -44,7 +44,7 @@ type ReauthResponseMessage struct {
 	Message string `json:"message"` // Error message if failed
 }
 
-// LiveStatusMessage is sent by server to notify clients of streamer live status
+// LiveStatusMessage is sent by server to notify clients of streamer live status.
 // Example:
 // {
 // 	"type": "live_status",
