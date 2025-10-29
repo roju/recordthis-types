@@ -28,7 +28,7 @@ type Subscriptions struct {
 //		"access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 //	}
 type ReauthRequest struct {
-	Type        string `json:"type"`         // "reauth"
+	Type        string `json:"type"`         // "reauth_request"
 	AccessToken string `json:"access_token"` // New access token
 }
 
