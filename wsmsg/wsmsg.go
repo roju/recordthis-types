@@ -1,6 +1,16 @@
 // Websocket messages sent between client and server
 package wsmsg
 
+// MessageType represents the type of websocket message
+type MessageType string
+
+const (
+	TypeSubscriptions  MessageType = "subscriptions"
+	TypeReauthRequest  MessageType = "reauth_request"
+	TypeReauthResponse MessageType = "reauth_response"
+	TypeLiveStatus     MessageType = "live_status"
+)
+
 // Subscriptions is sent by client to subscribe to streamers. Example:
 //
 //	{
@@ -17,7 +27,7 @@ package wsmsg
 //		}
 //	}
 type Subscriptions struct {
-	Type      string              `json:"type"`      // "subscriptions"
+	Type      MessageType         `json:"type"`      // "subscriptions"
 	Streamers map[string][]string `json:"streamers"` // Platform -> list of usernames
 }
 
@@ -28,8 +38,8 @@ type Subscriptions struct {
 //		"access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 //	}
 type ReauthRequest struct {
-	Type        string `json:"type"`         // "reauth_request"
-	AccessToken string `json:"access_token"` // New access token
+	Type        MessageType `json:"type"`         // "reauth_request"
+	AccessToken string      `json:"access_token"` // New access token
 }
 
 // ReauthResponse is sent by server after reauth attempt. Example:
@@ -40,9 +50,9 @@ type ReauthRequest struct {
 //		"message": "Reauthentication successful"
 //	}
 type ReauthResponse struct {
-	Type    string `json:"type"`    // "reauth_response"
-	Success bool   `json:"success"` // Whether reauth succeeded
-	Message string `json:"message"` // Error message if failed
+	Type    MessageType `json:"type"`    // "reauth_response"
+	Success bool        `json:"success"` // Whether reauth succeeded
+	Message string      `json:"message"` // Error message if failed
 }
 
 // LiveStatus is sent by server to notify clients of streamer live status. Example:
@@ -61,6 +71,6 @@ type ReauthResponse struct {
 //		}
 //	}
 type LiveStatus struct {
-	Type   string                     `json:"type"`    // "live_status"
+	Type   MessageType                `json:"type"`    // "live_status"
 	IsLive map[string]map[string]bool `json:"is_live"` // Platform -> Username -> IsLive
 }
