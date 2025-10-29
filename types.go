@@ -1,28 +1,65 @@
 package types
 
-// Stream represents a single stream variant with quality information
-type Stream struct {
-	URL     string `json:"url"`     // The URL for this stream variant
-	Quality string `json:"quality"` // Quality identifier (e.g., "1080p", "720p", "best", "worst")
+// SubscriptionsMessage is sent by client to subscribe to streamers
+// Example:
+// {
+// 	"type": "subscriptions",
+// 	"streamers": {
+// 		"platformA": [
+// 			"streamer1",
+// 			"streamer2"
+// 		],
+// 		"platformB": [
+// 			"streamer3",
+// 			"streamer4"
+// 		]
+// 	}
+// }
+type SubscriptionsMessage struct {
+	Type      string              `json:"type"`      // "subscriptions"
+	Streamers map[string][]string `json:"streamers"` // Platform -> list of usernames
 }
 
-// Streamer represents a streamer being monitored for live streams
-type Streamer struct {
-	Platform    string   `json:"platform"`
-	Username    string   `json:"username"`
-	LastChecked int64    `json:"last_checked"` // Unix timestamp
-	Checking    bool     `json:"checking"`
-	Paused      bool     `json:"paused"`
-	AutoRecord  bool     `json:"auto_record"`
-	IsLive      bool     `json:"is_live"`
-	LastLive    string   `json:"last_live"` // ISO 8601 string or "unknown"
-	VODs        int      `json:"vods"`      // Number of recorded VODs
-	VodPath     string   `json:"vod_path"`  // Path to the folder where recordings are saved
-	StreamUrls  []Stream `json:"stream_urls"`
-	IsPrivate   bool     `json:"is_private"`
+// ReauthMessage is sent by client to reauthenticate with a new access token
+// Example:
+// {
+// 	"type": "reauth",
+// 	"access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+// }
+type ReauthMessage struct {
+	Type        string `json:"type"`         // "reauth"
+	AccessToken string `json:"access_token"` // New access token
 }
 
-type StreamerId struct {
-	Platform string `json:"platform"`
-	Username string `json:"username"`
+// ReauthResponseMessage is sent by server after reauth attempt
+// Example:
+// {
+// 	"type": "reauth_response",
+// 	"success": true,
+// 	"message": "Reauthentication successful"
+// }
+type ReauthResponseMessage struct {
+	Type    string `json:"type"`    // "reauth_response"
+	Success bool   `json:"success"` // Whether reauth succeeded
+	Message string `json:"message"` // Error message if failed
+}
+
+// LiveStatusMessage is sent by server to notify clients of streamer live status
+// Example:
+// {
+// 	"type": "live_status",
+// 	"is_live": {
+// 		"platformA": {
+// 			"streamer1": true,
+// 			"streamer2": false
+// 		},
+// 		"platformB": {
+// 			"streamer3": false,
+// 			"streamer4": false
+// 		}
+// 	}
+// }
+type LiveStatusMessage struct {
+	Type   string                     `json:"type"`    // "live_status"
+	IsLive map[string]map[string]bool `json:"is_live"` // Platform -> Username -> IsLive
 }
