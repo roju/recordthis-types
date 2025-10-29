@@ -1,7 +1,7 @@
 // Websocket messages sent between client and server
 package wsmsg
 
-// SubscriptionsMessage is sent by client to subscribe to streamers. Example:
+// Subscriptions is sent by client to subscribe to streamers. Example:
 //
 //	{
 //		"type": "subscriptions",
@@ -21,10 +21,10 @@ type Subscriptions struct {
 	Streamers map[string][]string `json:"streamers"` // Platform -> list of usernames
 }
 
-// ReauthMessage is sent by client to reauthenticate with a new access token. Example:
+// ReauthRequest is sent by client to reauthenticate with a new access token. Example:
 //
 //	{
-//		"type": "reauth",
+//		"type": "reauth_request",
 //		"access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 //	}
 type ReauthRequest struct {
@@ -32,7 +32,7 @@ type ReauthRequest struct {
 	AccessToken string `json:"access_token"` // New access token
 }
 
-// ReauthResponseMessage is sent by server after reauth attempt. Example:
+// ReauthResponse is sent by server after reauth attempt. Example:
 //
 //	{
 //		"type": "reauth_response",
@@ -45,7 +45,7 @@ type ReauthResponse struct {
 	Message string `json:"message"` // Error message if failed
 }
 
-// LiveStatusMessage is sent by server to notify clients of streamer live status. Example:
+// LiveStatus is sent by server to notify clients of streamer live status. Example:
 //
 //	{
 //		"type": "live_status",
